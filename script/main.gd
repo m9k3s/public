@@ -3,12 +3,14 @@ var screen_size = Vector2()
 
 var player_scene = preload("res://scene/player.tscn")
 var goal_scene = preload("res://scene/goal.tscn")
+var enemy_scene = preload("res://scene/enemy.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
 	add_player()
 	add_goal()
+	add_enemy()
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -37,6 +39,10 @@ func add_goal():
 func goal_crash():
 	print("crash")
 	add_goal()
+
+func add_enemy():
+	var enemy = enemy_scene.instantiate()
+	add_child(enemy)
 
 func random_number(start,end):
 	var n

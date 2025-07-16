@@ -10,7 +10,11 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
+func emit_goal_crash():
+	emit_signal("goal_crash")
+
 func crash(e):
 	print(e)
-	emit_signal("goal_crash")
+	call_deferred("emit_goal_crash")
 	queue_free()
+	
