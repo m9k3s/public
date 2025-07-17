@@ -42,11 +42,16 @@ func goal_crash():
 
 func add_enemy():
 	var enemy = enemy_scene.instantiate()
+	enemy.spwan_location = "right"
 	add_child(enemy)
+	
+	enemy.position.x = 1300
+	enemy.position.y = 32
+	
 
 func random_number(start,end):
 	var n
 	var r = RandomNumberGenerator.new()
 	n = r.randi_range(start,end)
-	print(n)
+	#print(n)
 	return n
