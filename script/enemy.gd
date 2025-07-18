@@ -16,7 +16,7 @@ func _ready() -> void:
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	
 	if can_check_wall == false:
 		if spwan_location == "top" and position.y > 16:
@@ -31,8 +31,11 @@ func _process(delta: float) -> void:
 	if can_check_wall == true:
 		check_wall()
 		
-	velocity = direction * speed
-	move_and_slide()
+	velocity = direction * speed * delta
+	var collide = move_and_collide(velocity)
+	if collide:
+		if collide.get_collider().name == "player":
+			queue_free()
 
 func check_wall():
 	if  position.x <= 0 + sprite_size.x/2 or position.x >= screen_size.x - sprite_size.x/2:

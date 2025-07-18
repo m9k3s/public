@@ -12,6 +12,11 @@ func _ready() -> void:
 	add_goal()
 	add_enemy()
 	
+	var n = 0
+	while n < 10:
+		add_enemy()
+		n+=1
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -42,11 +47,24 @@ func goal_crash():
 
 func add_enemy():
 	var enemy = enemy_scene.instantiate()
-	enemy.spwan_location = "right"
+	var spwan_location = random_spawn_location()
+	enemy.spwan_location = spwan_location
+	
 	add_child(enemy)
 	
-	enemy.position.x = 1300
-	enemy.position.y = 32
+	if spwan_location == "top":
+		enemy.position.x = random_number(0,screen_size.x)
+		enemy.position.y = - 50
+	if spwan_location == "bot":
+		enemy.position.x = random_number(0,screen_size.x)
+		enemy.position.y = screen_size.y + 50
+	if spwan_location == "left":
+		enemy.position.x = - 50
+		enemy.position.y = random_number(0,screen_size.y)
+	if spwan_location == "right":
+		enemy.position.x = screen_size.x + 50
+		enemy.position.y = random_number(0,screen_size.y)
+	
 	
 
 func random_number(start,end):
@@ -55,3 +73,10 @@ func random_number(start,end):
 	n = r.randi_range(start,end)
 	#print(n)
 	return n
+
+func random_spawn_location():
+	var l = ["top","bot","left","right"]
+	var s
+	s = l.pick_random()
+	return s
+	

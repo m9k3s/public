@@ -8,7 +8,7 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	# create a new var to hold the object direction
 	var direction = Vector2()
 	
@@ -22,6 +22,6 @@ func _process(delta: float) -> void:
 		direction.x += 1
 	
 	direction = direction.normalized() # to make speed consistent
-	velocity = direction * speed # to set the velocity to direction and speed
+	velocity = direction * speed * delta # to set the velocity to direction and speed
 	
-	move_and_slide() #to move the object
+	move_and_collide(velocity) #to move the object
