@@ -12,11 +12,6 @@ func _ready() -> void:
 	add_goal()
 	add_enemy()
 	
-	var n = 0
-	while n < 10:
-		add_enemy()
-		n+=1
-	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -42,8 +37,8 @@ func add_goal():
 	
 
 func goal_crash():
-	print("crash")
 	add_goal()
+	add_enemy()
 
 func add_enemy():
 	var enemy = enemy_scene.instantiate()
@@ -65,8 +60,12 @@ func add_enemy():
 		enemy.position.x = screen_size.x + 50
 		enemy.position.y = random_number(0,screen_size.y)
 	
-	
+	enemy.connect("enemy_crash",enemy_crash)
 
+func enemy_crash():
+	print("enemy crash")
+	add_enemy()
+	
 func random_number(start,end):
 	var n
 	var r = RandomNumberGenerator.new()

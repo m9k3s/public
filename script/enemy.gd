@@ -1,5 +1,6 @@
-extends CharacterBody2D
+extends Area2D
 
+signal enemy_crash
 var direction = Vector2()
 var speed = 300
 var sprite_size
@@ -9,15 +10,20 @@ var can_check_wall
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 
+	
+
 	check_spwan()
 	can_check_wall = false
 	sprite_size = $Sprite2D.texture.get_size()
 	screen_size = get_viewport_rect().size
 	
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta: float) -> void:
+	# connect to area enter and emit siginal
+	connect("area_entered",crash)
 	
+	
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	var velocity = Vector2()
 	if can_check_wall == false:
 		if spwan_location == "top" and position.y > 16:
 			can_check_wall = true
@@ -32,10 +38,7 @@ func _physics_process(delta: float) -> void:
 		check_wall()
 		
 	velocity = direction * speed * delta
-	var collide = move_and_collide(velocity)
-	if collide:
-		if collide.get_collider().name == "player":
-			queue_free()
+	position += velocity
 
 func check_wall():
 	if  position.x <= 0 + sprite_size.x/2 or position.x >= screen_size.x - sprite_size.x/2:
@@ -57,3 +60,12 @@ func check_spwan():
 	if spwan_location == "right":
 		direction.x = -1
 		direction.y = 0
+
+func emit_enemy_crash():
+	emit_signal("enemy_crash")
+
+
+func crash(s):
+	if s.name == "player":
+		call_deferred("emit_enemy_crash")
+		queue_free()

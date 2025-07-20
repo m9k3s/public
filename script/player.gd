@@ -1,4 +1,4 @@
-extends CharacterBody2D #node type important
+extends Area2D #node type important
 
 var speed = 200 #set the speed
 
@@ -8,7 +8,8 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
+	var velocity = Vector2()
 	# create a new var to hold the object direction
 	var direction = Vector2()
 	
@@ -24,4 +25,4 @@ func _physics_process(delta: float) -> void:
 	direction = direction.normalized() # to make speed consistent
 	velocity = direction * speed * delta # to set the velocity to direction and speed
 	
-	move_and_collide(velocity) #to move the object
+	position += velocity
