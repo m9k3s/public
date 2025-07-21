@@ -8,14 +8,17 @@ var enemy_scene = preload("res://scene/enemy.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
-	add_player()
+	#add_player()
 	add_goal()
 	add_enemy()
 	
+	for i in range(100):
+		add_enemy()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	if Input.is_key_pressed(KEY_1):
+		get_tree().reload_current_scene()
 	
 func add_player():
 	var player = player_scene.instantiate()
