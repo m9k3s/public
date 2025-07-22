@@ -2,7 +2,7 @@ extends Area2D
 
 signal enemy_crash
 var direction = Vector2()
-var speed = 50
+var speed = 300
 var sprite_size
 var screen_size = Vector2()
 var spwan_location
@@ -22,22 +22,12 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	var velocity = Vector2()
-	if can_check_wall == false:
-		if spwan_location == "top" and position.y > 16:
-			can_check_wall = true
-		if spwan_location == "bot" and position.y < 16:
-			can_check_wall = true
-		if spwan_location == "left" and position.x > 16:
-			can_check_wall = true
-		if spwan_location == "right" and position.x < screen_size.x-16:
-			can_check_wall = true
-	
-	if can_check_wall == true:
-		check_wall()
-		
+
 	direction = direction.normalized()
 	velocity = direction * speed * delta
 	position += velocity
+	
+	check_wall()
 
 func check_wall():
 	if  position.x <= 0 + sprite_size.x/2 or position.x >= screen_size.x - sprite_size.x/2:
