@@ -7,9 +7,9 @@ var sprite_size
 var screen_size = Vector2()
 var spwan_location
 var can_check_wall
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
 	check_spwan()
 	can_check_wall = false
 	sprite_size = $Sprite2D.texture.get_size()
