@@ -8,6 +8,9 @@ var enemy_scene = preload("res://scene/enemy.tscn")
 var goal_spwan_gap = Vector2(100,100)
 
 var player_life
+var player_goal
+var target_goal
+var game_state
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -15,6 +18,10 @@ func _ready() -> void:
 	add_player()
 	add_goal()
 	add_enemy()
+	player_life = 3
+	player_goal = 0
+	target_goal = 30
+	game_state = ""
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -22,6 +29,21 @@ func _process(delta: float) -> void:
 		get_tree().reload_current_scene()
 	if Input.is_key_pressed(KEY_ESCAPE):
 		get_tree().quit()
+	change_main_gui()
+	check_win_lose()
+	
+func change_main_gui():
+	var life_label = get_node("main_gui/label_life")
+	var goal_label = get_node("main_gui/label_goal")
+	var target_label = get_node("main_gui/label_target")
+	life_label.text = "Life = " + str(player_life)
+	goal_label.text = "Goal = " + str(player_goal)
+	target_label.text ="Target = " + str(target_goal)
+
+func check_win_lose():
+	if player_life < 1 and game_state != "lose":
+		$player.queue_free()
+		game_state = "lose"
 	
 func add_player():
 	var player = player_scene.instantiate()
@@ -47,6 +69,8 @@ func add_goal():
 func goal_crash():
 	add_goal()
 	add_enemy()
+	player_goal += 1
+	print(player_goal)
 
 func add_enemy():
 	var enemy = enemy_scene.instantiate()
@@ -71,8 +95,8 @@ func add_enemy():
 	enemy.connect("enemy_crash",enemy_crash)
 
 func enemy_crash():
-	$player.queue_free()
 	add_enemy()
+	player_life -= 1
 	
 func random_number(start,end):
 	var n

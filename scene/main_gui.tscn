@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://bi2w8suu3jxaj"]
+
+[node name="main_gui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 48.0
+
+[node name="label_life" type="Label" parent="."]
+layout_mode = 0
+offset_left = 64.0
+offset_right = 161.0
+offset_bottom = 45.0
+theme_override_font_sizes/font_size = 32
+text = "Life ="
+
+[node name="label_goal" type="Label" parent="."]
+layout_mode = 0
+offset_left = 256.0
+offset_right = 361.0
+offset_bottom = 45.0
+theme_override_font_sizes/font_size = 32
+text = "Goal = "
+
+[node name="label_target" type="Label" parent="."]
+layout_mode = 0
+offset_left = 448.0
+offset_right = 582.0
+offset_bottom = 45.0
+theme_override_font_sizes/font_size = 32
+text = "Target = "
+
+[node name="Label3" type="Label" parent="."]
+layout_mode = 0
+offset_left = 1648.0
+offset_right = 1854.0
+offset_bottom = 45.0
+theme_override_font_sizes/font_size = 32
+text = "Square Crash"
