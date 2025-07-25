@@ -7,14 +7,17 @@ var sprite_size
 var screen_size = Vector2()
 var spwan_location
 var can_check_wall
+var main_gui_bar_size
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	add_to_group("enemy")
 	check_spwan()
 	can_check_wall = false
 	sprite_size = $Sprite2D.texture.get_size()
 	screen_size = get_viewport_rect().size
-	
+	main_gui_bar_size = get_parent().get_node("main_gui/bar").size
+	print(main_gui_bar_size)
 	# connect to area enter and emit siginal
 	connect("area_entered",crash)
 	
@@ -33,7 +36,7 @@ func check_wall():
 	if  position.x <= 0 + sprite_size.x/2 or position.x >= screen_size.x - sprite_size.x/2:
 		direction.x = - direction.x
 	
-	if position.y <= 0 + sprite_size.y/2 or position.y >= screen_size.y - sprite_size.y/2:
+	if position.y <= 0 + sprite_size.y/2 + main_gui_bar_size.y or position.y >= screen_size.y - sprite_size.y/2:
 		direction.y = - direction.y
 
 func check_spwan():

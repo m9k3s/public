@@ -11,17 +11,21 @@ var player_life
 var player_goal
 var target_goal
 var game_state
-	
+
+var main_gui_bar_size
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
+	main_gui_bar_size = get_node("main_gui/bar").size
 	add_player()
 	add_goal()
 	add_enemy()
 	player_life = 3
 	player_goal = 0
-	target_goal = 30
+	target_goal = 20
 	game_state = ""
+	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -44,6 +48,11 @@ func check_win_lose():
 	if player_life < 1 and game_state != "lose":
 		$player.queue_free()
 		game_state = "lose"
+	if player_goal == target_goal and game_state != "win":
+		game_state == "win"
+		var enemy = get_tree().get_nodes_in_group("enemy")
+		for e in enemy:
+			e.speed = 0
 	
 func add_player():
 	var player = player_scene.instantiate()
@@ -52,7 +61,7 @@ func add_player():
 	add_child(player)
 	
 	player.position.x = screen_size.x/2 - player_size.x/2
-	player.position.y = screen_size.y/2 - player_size.y/2
+	player.position.y = screen_size.y/2 + main_gui_bar_size.y - player_size.y/2
 
 func add_goal():
 	var goal = goal_scene.instantiate()
@@ -61,7 +70,7 @@ func add_goal():
 	add_child(goal)
 	
 	goal.position.x = random_number(goal_size.x/2+goal_spwan_gap.x,screen_size.x-goal_size.x/2-goal_spwan_gap.x)
-	goal.position.y = random_number(goal_size.y/2+goal_spwan_gap.y,screen_size.y-goal_size.y/2-goal_spwan_gap.y)
+	goal.position.y = random_number(goal_size.y/2+goal_spwan_gap.y+main_gui_bar_size.y,screen_size.y-goal_size.y/2-goal_spwan_gap.y)
 	
 	goal.connect("goal_crash",goal_crash)
 	#print(goal_size)
@@ -70,7 +79,7 @@ func goal_crash():
 	add_goal()
 	add_enemy()
 	player_goal += 1
-	print(player_goal)
+	
 
 func add_enemy():
 	var enemy = enemy_scene.instantiate()
@@ -81,16 +90,16 @@ func add_enemy():
 	
 	if spwan_location == "top":
 		enemy.position.x = random_number(32/2,screen_size.x-32/2)
-		enemy.position.y = 32/2
+		enemy.position.y = 32/2 + main_gui_bar_size.y
 	if spwan_location == "bot":
 		enemy.position.x = random_number(32/2,screen_size.x-32/2)
 		enemy.position.y = screen_size.y - 32/2
 	if spwan_location == "left":
 		enemy.position.x = 32/2
-		enemy.position.y = random_number(32/2,screen_size.y-32/2)
+		enemy.position.y = random_number(32/2+main_gui_bar_size.y,screen_size.y-32/2)
 	if spwan_location == "right":
 		enemy.position.x = screen_size.x - 32/2
-		enemy.position.y = random_number(32/2,screen_size.y-32/2)
+		enemy.position.y = random_number(32/2+main_gui_bar_size.y,screen_size.y-32/2)
 	
 	enemy.connect("enemy_crash",enemy_crash)
 

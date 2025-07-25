@@ -13,25 +13,25 @@ script = ExtResource("1_pyxt3")
 
 [node name="start_button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 900.0
-offset_top = 642.0
-offset_right = 1096.0
-offset_bottom = 681.0
+offset_left = 835.0
+offset_top = 639.0
+offset_right = 1031.0
+offset_bottom = 678.0
 text = " Start"
 
 [node name="close_button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 897.0
+offset_left = 836.0
 offset_top = 707.0
-offset_right = 1093.0
+offset_right = 1032.0
 offset_bottom = 746.0
 text = "Close"
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 653.0
-offset_top = 418.0
-offset_right = 1296.0
-offset_bottom = 555.0
-theme_override_font_sizes/font_size = 100
+offset_left = 480.0
+offset_top = 377.0
+offset_right = 1443.0
+offset_bottom = 582.0
+theme_override_font_sizes/font_size = 150
 text = "Square Crash"
