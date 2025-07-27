@@ -4,6 +4,7 @@ var screen_size = Vector2()
 var player_scene = preload("res://scene/player.tscn")
 var goal_scene = preload("res://scene/goal.tscn")
 var enemy_scene = preload("res://scene/enemy.tscn")
+var win_gui_scene = preload("res://scene/win_gui.tscn")
 
 var goal_spwan_gap = Vector2(100,100)
 
@@ -23,7 +24,7 @@ func _ready() -> void:
 	add_enemy()
 	player_life = 3
 	player_goal = 0
-	target_goal = 20
+	target_goal = 15
 	game_state = ""
 	
 	
@@ -50,10 +51,19 @@ func check_win_lose():
 		game_state = "lose"
 	if player_goal == target_goal and game_state != "win":
 		game_state == "win"
+		add_win_gui()
 		var enemy = get_tree().get_nodes_in_group("enemy")
 		for e in enemy:
 			e.speed = 0
-	
+
+func add_win_gui():
+	var win = win_gui_scene.instantiate()
+	var win_box = win.get_node("box")
+	var win_box_size = win_box.size
+	win.position.x = screen_size.x/2 - win_box_size.x/2
+	win.position.y = screen_size.y/2 - win_box_size.y/2 
+	add_child(win)
+
 func add_player():
 	var player = player_scene.instantiate()
 	var player_sprite = player.get_node("Sprite2D")
