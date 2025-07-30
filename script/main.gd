@@ -5,6 +5,7 @@ var player_scene = preload("res://scene/player.tscn")
 var goal_scene = preload("res://scene/goal.tscn")
 var enemy_scene = preload("res://scene/enemy.tscn")
 var win_gui_scene = preload("res://scene/win_gui.tscn")
+var lose_gui_scene = preload("res://scene/lose_gui.tscn")
 
 var goal_spwan_gap = Vector2(100,100)
 
@@ -48,6 +49,7 @@ func change_main_gui():
 func check_win_lose():
 	if player_life < 1 and game_state != "lose":
 		$player.queue_free()
+		add_lose_gui()
 		game_state = "lose"
 	if player_goal == target_goal and game_state != "win":
 		game_state == "win"
@@ -63,6 +65,14 @@ func add_win_gui():
 	win.position.x = screen_size.x/2 - win_box_size.x/2
 	win.position.y = screen_size.y/2 - win_box_size.y/2 
 	add_child(win)
+
+func add_lose_gui():
+	var lose = lose_gui_scene.instantiate()
+	var lose_box = lose.get_node("box")
+	var lose_box_size = lose_box.size
+	lose.position.x = screen_size.x/2 - lose_box_size.x/2
+	lose.position.y = screen_size.y/2 - lose_box_size.y/2
+	add_child(lose)
 
 func add_player():
 	var player = player_scene.instantiate()

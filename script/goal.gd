@@ -5,7 +5,6 @@ signal goal_crash
 func _ready() -> void:
 	connect("area_entered",crash)
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
